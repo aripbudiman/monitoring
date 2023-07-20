@@ -18,6 +18,7 @@
                 <th scope="col">Pola Bayar</th>
                 <th scope="col">Nominal</th>
                 <th scope="col">Dokumentasi</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@
                 <td class="w-25"><img class="img-thumbnail w-25"
                         src="{{ asset(str_replace('public/','storage/',$item->dokumentasi)) }}">
                 </td>
+                <td><a href="{{ route('monitoring.edit_foto',$item->id) }}">Edit Foto</a></td>
             </tr>
             @endforeach
         </tbody>

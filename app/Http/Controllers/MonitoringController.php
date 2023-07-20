@@ -48,14 +48,38 @@ class MonitoringController extends Controller
         try {
             $data = $request->all();
             $uploadedFile = $request->file('dokumentasi');
-            $originalFilename = $uploadedFile->getClientOriginalName();
-            $newFilename = $data['anggota'].'__'.$data['majelis'].'__'.$data['tanggal'] . '.' . $uploadedFile->getClientOriginalExtension();
+            $lastId = DB::table('monitoring_angsuran')->orderBy('id', 'desc')->first()->id;
+            $newId = $lastId + 1;
+            $newFilename = $newId.'__'.$data['anggota'].'__'.$data['majelis'].'__'.$data['tanggal'] . '.' . $uploadedFile->getClientOriginalExtension();
             $data['dokumentasi'] = $uploadedFile->storeAs('public/dokumentasi', $newFilename);
             Monitoring::create($data);
         DB::commit();
         } catch (\Throwable $th) {
+            return with('error',$th);
             DB::rollBack();
         }
         return redirect()->back()->with('success', 'Monitoring berhasil ditambahkan');
+    }
+
+    public function edit(Monitoring $monitoring){
+        return view('edit',compact('monitoring'));
+    }
+
+    public function update_dokumentasi(Request $request,Monitoring $monitoring){
+
+        if($request->hasFile('dokumentasi')){
+            $uploadedFile = $request->file('dokumentasi');
+            $ext=$uploadedFile->getClientOriginalExtension();
+            $nama=$monitoring->anggota;
+            $majelis=$monitoring->majelis;
+            $newNamaFoto=$monitoring->id.'__'.$nama.'__'.$majelis.'__'.$monitoring->tanggal.'.'.$ext;
+            $monitoring->dokumentasi=$uploadedFile->storeAs('public/dokumentasi',$newNamaFoto);
+            $monitoring->save();
+            return redirect()->back();
+        }else{
+            $monitoring->dokumentasi=$monitoring->dokumentasi;
+            $monitoring->save();
+            return redirect()->back();
+        }   
     }
 }

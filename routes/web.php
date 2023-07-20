@@ -25,3 +25,5 @@ Route::get('monitoring/index',[MonitoringController::class,'index'])->name('moni
 Route::post('monitoring/select-majelis',[MonitoringController::class,'select_majelis'])->name('monitoring.majelis');
 Route::post('monitoring/select-anggota',[MonitoringController::class,'select_anggota'])->name('monitoring.anggota');
 Route::post('monitoring/store',[MonitoringController::class,'store'])->name('monitoring.store');
+Route::get('monitoring/{monitoring}/edit_foto',[MonitoringController::class,'edit'])->name('monitoring.edit_foto');
+Route::put('monitoring/update_foto/{monitoring}',[MonitoringController::class,'update_dokumentasi'])->name('monitoring.update_dokumentasi');
