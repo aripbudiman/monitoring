@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MonitoringAngsuran as Monitoring;
+use Carbon\Carbon;
+use App\Exports\DataExport;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use App\Models\MonitoringAngsuran as Monitoring;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class MonitoringController extends Controller
@@ -81,5 +83,11 @@ class MonitoringController extends Controller
             $monitoring->save();
             return redirect()->back();
         }   
+    }
+
+
+    public function exportData()
+    {
+        return Excel::download(new DataExport, 'data.xlsx');
     }
 }

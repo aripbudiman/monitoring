@@ -27,3 +27,4 @@ Route::post('monitoring/select-anggota',[MonitoringController::class,'select_ang
 Route::post('monitoring/store',[MonitoringController::class,'store'])->name('monitoring.store');
 Route::get('monitoring/{monitoring}/edit_foto',[MonitoringController::class,'edit'])->name('monitoring.edit_foto');
 Route::put('monitoring/update_foto/{monitoring}',[MonitoringController::class,'update_dokumentasi'])->name('monitoring.update_dokumentasi');
+Route::get('/export', [MonitoringController::class,'exportData'])->name('export');
